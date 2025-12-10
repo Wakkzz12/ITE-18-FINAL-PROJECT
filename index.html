@@ -1,11 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>3D Skeleton Viewer</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-    
+  <div id="app">
+    <div id="viewer"></div>
+
+    <aside id="info-panel" aria-hidden="true">
+      <button id="close-info">×</button>
+      <h2 id="bone-title">Select a bone</h2>
+      <p id="bone-desc"></p>
+      <h3>Function</h3>
+      <p id="bone-func"></p>
+    </aside>
+
+    <div id="hud">
+      <button id="reset-btn">Reset View</button>
+      <div id="help">Tap/click a bone to zoom & show info</div>
+    </div>
+  </div>
+
+  <!-- Three.js + loaders from unpkg CDN -->
+  <script type="module">
+    import './js/main.js';
+  </script>
 </body>
 </html>

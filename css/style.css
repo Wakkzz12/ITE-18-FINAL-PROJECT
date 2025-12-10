@@ -1,0 +1,89 @@
+*{
+    box-sizing:border-box
+}
+html,body,#app{
+    height:100%;
+    margin:0;
+    font-family:Inter, Arial, sans-serif;
+    background:#111;
+    color:#eee
+}
+#viewer{
+    width:100%;
+    height:100%;display:block;
+    position:relative;
+    overflow:hidden
+}
+#info-panel{
+  position:fixed;
+  right:18px;
+  top:18px;
+  width:320px;
+  max-width:40%;
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(6px);
+  padding:16px;
+  border-radius:10px;
+  box-shadow:0 6px 30px rgba(0,0,0,0.6);
+  transform:translateY(-10px);
+  transition:all .22s;
+  opacity:0;pointer-events:none;
+}
+
+#info-panel[aria-hidden="false"]{
+    opacity:1;
+    pointer-events:auto;
+    transform:none
+}
+
+#info-panel h2{
+    margin:0 0 8px 0;
+    font-size:18px
+}
+
+#info-panel p{
+    margin:8px 0 12px 0;
+    line-height:1.4;
+    color:#ddd
+}
+
+#info-panel button#close-info{
+    position:absolute;
+    right:8px;
+    top:8px;
+    background:transparent;
+    border:0;color:#fff;
+    font-size:20px;
+    cursor:pointer
+}
+
+#hud{
+    position:fixed;
+    left:18px;
+    top:18px;
+    display:flex;
+    gap:8px;
+    align-items:center
+}
+
+#reset-btn{
+    padding:8px 12px;
+    background:#222;
+    border:1px solid #333;
+    color:#fff;
+    border-radius:8px;
+    cursor:pointer
+}
+
+#help{
+    font-size:13px;
+    opacity:.9
+}
+
+canvas{
+    display:block
+}
+
+@media (max-width:700px){
+  #info-panel{right:10px;left:10px;top:auto;bottom:10px;width:auto;max-width:calc(100% - 20px)}
+}

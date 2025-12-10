@@ -1,0 +1,17 @@
+{
+  "Skull": {
+    "displayName": "Skull (Cranium)",
+    "definition": "The skull protects the brain and supports the structures of the face.",
+    "function": "Protects the brain and sensory organs; provides attachment for jaw and facial muscles."
+  },
+  "Femur": {
+    "displayName": "Femur (Thigh bone)",
+    "definition": "The femur is the longest and strongest bone in the human body.",
+    "function": "Supports body weight during standing, walking and running; articulates with hip and knee."
+  },
+  "Humerus": {
+    "displayName": "Humerus (Upper arm)",
+    "definition": "Long bone of the upper arm between shoulder and elbow.",
+    "function": "Supports arm movement and muscle attachment for lifting and manipulation."
+  }
+}
