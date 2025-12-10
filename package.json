@@ -1,0 +1,13 @@
+{
+  "name": "bone-viewer",
+  "version": "1.0.0",
+  "description": "3D Bone Anatomy Viewer",
+  "main": "main.js",
+  "scripts": {
+    "dev": "browser-sync start --server --files \"**/*.html, **/*.css, **/*.js\" --port 3000",
+    "start": "npm run dev"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.29.3"
+  }
+}
