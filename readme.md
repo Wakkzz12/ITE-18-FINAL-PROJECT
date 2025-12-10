@@ -12,6 +12,11 @@ A simple 3D bone anatomy viewer built with Three.js that allows users to interac
 
 --Responsive design
 
+
+
+
+
+
 **Setup**
 Install dependencies: **npm install**
 
