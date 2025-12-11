@@ -1,6 +1,4 @@
-// js/main.js
-//
-import * as THREE from 'https://unpkg.com/three@0.156.0/build/three.module.js';
+import * as THREE from 'three';
 import { createScene } from './loader.js';
 import { createInteractor } from './interaction.js';
 import { createUI } from './ui.js';
@@ -19,7 +17,7 @@ async function loadJSON(url) {
 
   const { scene, camera, renderer, controls, root, boneMeshes } = await createScene({
     canvasContainerId: 'viewer',
-    objPath: 'assets/skeleton.obj'
+    objPath: '../assets/human-skeleton/skeleton.gltf'
   });
 
   const ui = createUI({ bonesMetadata });
