@@ -1,8 +1,8 @@
-**Bone Anatomy Viewer**
+# Bone Anatomy Viewer
 A simple 3D bone anatomy viewer built with Three.js that allows users to interact with a 3D bone model.
 
-**Features**
---Load and display 3D bone models (OBJ format)
+### Features
+--Load and display 3D bone models (GLTF format)
 
 --Click on bone parts to zoom in
 
@@ -12,13 +12,13 @@ A simple 3D bone anatomy viewer built with Three.js that allows users to interac
 
 --Responsive design
 
+### Setup
+Install dependencies:
+```
+npm install
+```
 
-
-
-
-
-**Setup**
-Install dependencies: **npm install**
-
-Start development server: **npm run dev**
-
+Start development server:
+```
+npm run dev
+```
