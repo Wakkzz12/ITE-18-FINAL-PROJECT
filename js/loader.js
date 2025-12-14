@@ -56,27 +56,31 @@ export async function createScene({ canvasContainerId, objPath }) {
             const model = gltf.scene;
 
             model.traverse((child) => {
-            if (child.isMesh) {
-                child.material = new THREE.MeshStandardMaterial({
-                color: 0xe3dac9,
-                roughness: 0.5
+                if (child.isMesh) {
+                    console.log(child.name);
+
+                    // DO NOT replace material – preserve GLTF data
+                    if (child.material) {
+                    child.material.color.set(0xe3dac9);
+                    child.material.roughness = 0.5;
+                    }
+
+                    child.name = child.name || 'Bone_' + child.id;
+                    boneMeshes.push(child);
+                }
                 });
-                
-                // Ensure every bone has a name for the interaction logic
-                child.name = child.name || 'Bone_' + child.id; 
-                boneMeshes.push(child);
-            }
-            });
 
                 // Calculate the bounding box of the raw model
                 const box = new THREE.Box3().setFromObject(model);
                 const size = box.getSize(new THREE.Vector3());
                 const center = box.getCenter(new THREE.Vector3());
+                
+                model.position.sub(center);
 
                 // Reset position to center the model at (0,0,0)
-                model.position.x += (model.position.x - center.x);
+               /*  model.position.x += (model.position.x - center.x);
                 model.position.y += (model.position.y - center.y);
-                model.position.z += (model.position.z - center.z);
+                model.position.z += (model.position.z - center.z); */
 
                 // Scale it to a target size (e.g., 150 units tall)
                 // This ensures it looks the same regardless of the original file units

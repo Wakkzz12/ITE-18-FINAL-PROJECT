@@ -17,7 +17,7 @@ async function loadJSON(url) {
 
   const { scene, camera, renderer, controls, root, boneMeshes } = await createScene({
     canvasContainerId: 'viewer',
-    objPath: '../assets/human-skeleton/skeleton.gltf'
+    objPath: '../assets/human-skeleton/skeleton.glb'
   });
 
   const ui = createUI({ bonesMetadata });
@@ -25,9 +25,14 @@ async function loadJSON(url) {
   const interactor = createInteractor({
     scene, camera, renderer, controls, boneMeshes, bonesMetadata,
     onSelect: (meshName, meta) => {
-      ui.showBone(meshName, meta);
+      ui.showBone(meshName, meta || {
+        name: meshName,
+        definition: 'No description available.',
+        function: 'No function data available.'
+      });
     }
   });
+
 
   // reset button
   ui.resetBtn.addEventListener('click', () => {

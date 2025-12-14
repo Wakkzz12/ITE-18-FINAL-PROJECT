@@ -8,10 +8,16 @@ export function createUI({ bonesMetadata }) {
 
   closeBtn.addEventListener('click', () => {
     panel.setAttribute('aria-hidden', 'true');
+    title.textContent = '';
+    desc.textContent = '';
+    func.textContent = '';
   });
 
   function showBone(meshName, meta) {
-    const person = meta || bonesMetadata[meshName] || {};
+    const person = {
+      ...(bonesMetadata[meshName] || {}),
+      ...(meta || {})
+    };
     title.textContent = person.displayName || meshName;
     desc.textContent = person.definition || 'No description provided.';
     func.textContent = person.function || 'No function text provided.';

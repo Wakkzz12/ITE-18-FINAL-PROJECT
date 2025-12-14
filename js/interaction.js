@@ -1,54 +1,80 @@
 import * as THREE from 'three';
 
-export function createInteractor({ scene, camera, renderer, boneMeshes, bonesMetadata, onSelect }) {
-    const raycaster = new THREE.Raycaster();
-    const pointer = new THREE.Vector2();
-    let highlightedMaterial = new THREE.MeshStandardMaterial({ color: 0xffaa00, emissive: 0x442200 });
-    let originalMaterial = null;
-    let selectedBone = null;
+export function createInteractor({
+  camera,
+  renderer,
+  boneMeshes,
+  bonesMetadata,
+  onSelect
+}) {
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
 
-    function onPointerDown(event) {
-        // 1. Calculate pointer position in normalized device coordinates (-1 to +1)
-        const rect = renderer.domElement.getBoundingClientRect();
-        pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+  let selectedBone = null;
+  let originalMaterial = null;
 
-        // 2. Cast a ray from the camera
-        raycaster.setFromCamera(pointer, camera);
+  function highlightBone(bone) {
+    originalMaterial = bone.material.clone();
+    bone.material = bone.material.clone();
+    bone.material.emissive.setHex(0xff8800);
+    bone.material.emissiveIntensity = 0.6;
+  }
 
-        // 3. See what we hit
-        const intersects = raycaster.intersectObjects(boneMeshes, false);
-
-        if (intersects.length > 0) {
-        const hitObject = intersects[0].object;
-        
-        // Restore previous bone material if one was selected
-        if (selectedBone && selectedBone !== hitObject) {
-            if (originalMaterial) selectedBone.material = originalMaterial;
-        }
-
-        // Select new bone
-        if (selectedBone !== hitObject) {
-            selectedBone = hitObject;
-            originalMaterial = selectedBone.material; // Save original color
-            selectedBone.material = highlightedMaterial; // Highlight
-            
-            // Notify main.js
-            const meshName = selectedBone.name || 'Unknown';
-            onSelect(meshName, bonesMetadata[meshName]);
-
-            // Optional: Zoom camera to bone (simple implementation)
-            // camera.position.lerp(new THREE.Vector3(hitObject.position.x, hitObject.position.y + 20, hitObject.position.z + 50), 0.1);
-        }
-        }
+  function restoreBone() {
+    if (selectedBone && originalMaterial) {
+      selectedBone.material = originalMaterial;
     }
+  }
 
-    // Add listener to the canvas
-    renderer.domElement.addEventListener('pointerdown', onPointerDown);
+  function focusCameraOnBone(bone) {
+    const box = new THREE.Box3().setFromObject(bone);
+    const center = box.getCenter(new THREE.Vector3());
+    const size = box.getSize(new THREE.Vector3()).length();
 
-    return {
-        cleanup: () => {
-        renderer.domElement.removeEventListener('pointerdown', onPointerDown);
-        }
+    const direction = new THREE.Vector3(0, 0, 1);
+    const distance = size * 1.8;
+
+    camera.position.lerp(
+      center.clone().add(direction.multiplyScalar(distance)),
+      0.15
+    );
+    camera.lookAt(center);
+  }
+
+  function onPointerDown(event) {
+    const rect = renderer.domElement.getBoundingClientRect();
+
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(pointer, camera);
+    const intersects = raycaster.intersectObjects(boneMeshes, false);
+
+    if (!intersects.length) return;
+
+    const hitBone = intersects[0].object;
+    if (hitBone === selectedBone) return;
+
+    restoreBone();
+    selectedBone = hitBone;
+    highlightBone(hitBone);
+
+    const name = hitBone.name;
+    const metadata = bonesMetadata[name] || {
+      name,
+      definition: 'No data available.',
+      function: 'No data available.'
     };
+
+    onSelect(name, metadata);
+    focusCameraOnBone(hitBone);
+  }
+
+  renderer.domElement.addEventListener('pointerdown', onPointerDown);
+
+  return {
+    cleanup() {
+      renderer.domElement.removeEventListener('pointerdown', onPointerDown);
+    }
+  };
 }
