@@ -61,12 +61,15 @@ export async function createScene({ canvasContainerId, objPath }) {
         'Metacarpals': ['Metacarpals', 'metacarpals', 'hand_bones'],
         'Phalanges': ['Phalanges', 'phalanges', 'fingers', 'toes'],
         'Tibia': ['Tibia', 'tibia', 'shin_bone', 'shin'],
-        'Radius': ['Radius', 'radius', 'forearm'],
+        'Radius': ['Radius', 'radius', 'thumb_side', 'radius_bone'],
+        'Ulna': ['Ulna', 'ulna', 'pinky_side', 'ulna_bone'],
         'Scapula': ['Scapula', 'scapula', 'shoulder_blade'],
         'Clavicle': ['Clavicle', 'clavicle', 'collar_bone'],
         "Patella": ['Patella', 'patella', 'kneecap'],
         "Carpals": ['Carpals', 'carpals', 'wrist_bones'],
         "Metatarsals": ['Metatarsals', 'metatarsals', 'foot_bones'],
+        "Skeletal System": ['Skeleton', 'skeleton', 'full_body'],
+        "Tarsals": ['Tarsals', 'tarsals', 'ankle_bones'],
     };
 
     // Function to match mesh name to bone name

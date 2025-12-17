@@ -54,6 +54,11 @@
     "definition": "One of the two long bones in the forearm, located on the thumb side.",
     "function": "Enables rotation of the forearm; supports wrist movement."
   },
+  "Ulna": {
+    "displayName": "Ulna (Forearm bone)",
+    "definition": "One of the two long bones in the forearm, located on the pinky side and extending from the elbow to the wrist.",
+    "function": "Forms the primary hinge of the elbow joint; supports forearm pronation and supination."
+  },
   "Scapula": {
     "displayName": "Scapula (Shoulder blade)",
     "definition": "Flat triangular bone located in the upper back.",
@@ -78,6 +83,16 @@
     "displayName": "Metatarsals (Foot bones)",
     "definition": "Long bones in the foot located between the ankle and toes.",
     "function": "Provide structure to the foot; support body weight during standing and walking."
+  },
+  "Skeletal System": {
+    "displayName": "Skeletal System",
+    "definition": "The skeletal system is the framework of bones and cartilage that supports and protects the body.",
+    "function": "Provides structure, protects organs, anchors muscles, and stores calcium."
+  },
+  "Tarsals": {
+    "displayName": "Tarsals (Ankle bones)",
+    "definition": "Group of seven bones that make up the ankle.",
+    "function": "Support weight of the body; enable foot movement and stability."
   }
 
 

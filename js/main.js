@@ -33,6 +33,11 @@ async function loadJSON(url) {
     }
   });
 
+  // Display Skeletal System info on page load
+  if (bonesMetadata['Skeletal System']) {
+    ui.showBone('Skeletal System', bonesMetadata['Skeletal System']);
+  }
+
 
   // reset button
   ui.resetBtn.addEventListener('click', () => {
