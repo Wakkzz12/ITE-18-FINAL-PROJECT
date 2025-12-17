@@ -13,5 +13,73 @@
     "displayName": "Humerus (Upper arm)",
     "definition": "Long bone of the upper arm between shoulder and elbow.",
     "function": "Supports arm movement and muscle attachment for lifting and manipulation."
+  },
+  "Ribcage": {
+    "displayName": "Ribs",
+    "definition": "Curved bones that form the rib cage, protecting thoracic organs.",
+    "function": "Protects heart and lungs; supports breathing by expanding and contracting the chest cavity."
+  },
+  "Vertebrae": {
+    "displayName": "Vertebrae (Spinal bones)",
+    "definition": "Series of small bones forming the backbone.",
+    "function": "Protects spinal cord; provides structural support and flexibility to the torso."
+  },
+  "Sternum": {
+    "displayName": "Sternum (Breastbone)",
+    "definition": "Flat bone located in the center of the chest.",
+    "function": "Connects to ribs via cartilage; protects heart and lungs."
+  },
+  "Hipbone": {
+    "displayName": "Hip Bone (Pelvis)",
+    "definition": "Large bone structure at the base of the spine.",
+    "function": "Supports weight of upper body; provides attachment for leg muscles; protects pelvic organs."
+  },
+  "Metacarpals": {
+    "displayName": "Metacarpals (Hand bones)",
+    "definition": "Bones of the hand located between the wrist and fingers.",
+    "function": "Provide structure to the hand; facilitate movement and dexterity."
+  },
+  "Phalanges": {
+    "displayName": "Phalanges (Finger and toe bones)",
+    "definition": "Bones that make up the fingers and toes.",
+    "function": "Enable fine motor skills in fingers; provide balance and support in toes."
+  },
+  "Tibia": {
+    "displayName": "Tibia (Shin bone)",
+    "definition": "The larger and stronger of the two bones in the lower leg.",
+    "function": "Supports body weight; provides attachment for muscles of the lower leg."
+  },
+  "Radius": {
+    "displayName": "Radius (Forearm bone)",
+    "definition": "One of the two long bones in the forearm, located on the thumb side.",
+    "function": "Enables rotation of the forearm; supports wrist movement."
+  },
+  "Scapula": {
+    "displayName": "Scapula (Shoulder blade)",
+    "definition": "Flat triangular bone located in the upper back.",
+    "function": "Connects humerus with clavicle; provides attachment for shoulder muscles."
+  },
+  "Clavicle": {
+    "displayName": "Clavicle (Collarbone)",
+    "definition": "Long bone that serves as a strut between the shoulder blade and the sternum.",
+    "function": "Provides support for shoulder; allows for a wide range of arm movements."
+  },
+  "Patella": {
+    "displayName": "Patella (Kneecap)",
+    "definition": "Small bone located in front of the knee joint.",
+    "function": "Protects knee joint; improves leverage of thigh muscles during leg extension."
+  },
+  "Carpals": {
+    "displayName": "Carpals (Wrist bones)",
+    "definition": "Group of eight small bones that make up the wrist.",
+    "function": "Facilitate wrist movement and flexibility; connect hand to forearm."
+  }, 
+  "Metatarsals": {
+    "displayName": "Metatarsals (Foot bones)",
+    "definition": "Long bones in the foot located between the ankle and toes.",
+    "function": "Provide structure to the foot; support body weight during standing and walking."
   }
+
+
+
 }
