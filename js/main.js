@@ -39,19 +39,20 @@ async function loadJSON(url) {
   }
 
 
-  // reset button
   ui.resetBtn.addEventListener('click', () => {
-    // simple reset camera
-    camera.position.set(0, 120, 350);
-    controls.target.set(0, 80, 0);
-    ui.hide();
-  });
+  interactor.resetSelection();
+  camera.position.set(0, 120, 350);
+  controls.target.set(0, 80, 0);
+  ui.hide();
+});
+
 
   // render loop
   function render() {
-    requestAnimationFrame(render);
-    controls.update();
-    renderer.render(scene, camera);
-  }
+  requestAnimationFrame(render);
+  controls.update();
+  interactor.updateCameraAnimation(); // 👈 ADD THIS
+  renderer.render(scene, camera);
+}
   render();
 })();

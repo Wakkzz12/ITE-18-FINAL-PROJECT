@@ -1,5 +1,10 @@
 import * as THREE from 'three';
 
+
+let cameraTargetPos = null;
+let cameraTargetLook = null;
+let isCameraAnimating = false;
+
 export function createInteractor({
   camera,
   renderer,
@@ -12,6 +17,7 @@ export function createInteractor({
 
   let selectedBone = null;
   let originalMaterial = null;
+  let hoveredBone = null;
 
   function highlightBone(bone) {
     originalMaterial = bone.material.clone();
@@ -31,15 +37,34 @@ export function createInteractor({
     const center = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3()).length();
 
-    const direction = new THREE.Vector3(0, 0, 1);
-    const distance = size * 1.8;
+    const meshName = bone.name;
+    const meta = bonesMetadata[meshName];
+    const offset = meta?.cameraOffset || [0, 1, 2.5];
 
-    camera.position.lerp(
-      center.clone().add(direction.multiplyScalar(distance)),
-      0.15
+    cameraTargetPos = center.clone().add(
+      new THREE.Vector3(
+        offset[0] * size,
+        offset[1] * size,
+        offset[2] * size
+      )
     );
-    camera.lookAt(center);
+
+    cameraTargetLook = center.clone();
+    isCameraAnimating = true;
   }
+
+  function updateCameraAnimation() {
+  if (!isCameraAnimating || !cameraTargetPos) return;
+
+  camera.position.lerp(cameraTargetPos, 0.08);
+  camera.lookAt(cameraTargetLook);
+
+  // Stop when close enough
+  if (camera.position.distanceTo(cameraTargetPos) < 0.05) {
+    isCameraAnimating = false;
+  }
+}
+
 
   function onPointerDown(event) {
     const rect = renderer.domElement.getBoundingClientRect();
@@ -70,11 +95,61 @@ export function createInteractor({
     focusCameraOnBone(hitBone);
   }
 
+  function onPointerMove(event) {
+    const rect = renderer.domElement.getBoundingClientRect();
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(pointer, camera);
+    const hits = raycaster.intersectObjects(boneMeshes, false);
+
+    if (!hits.length) {
+      if (hoveredBone && hoveredBone !== selectedBone) {
+        hoveredBone.material.emissive.setHex(0x000000);
+        hoveredBone = null;
+      }
+      return;
+    }
+
+    const bone = hits[0].object;
+    if (bone !== hoveredBone && bone !== selectedBone) {
+      if (hoveredBone) hoveredBone.material.emissive.setHex(0x000000);
+      hoveredBone = bone;
+      hoveredBone.material.emissive.setHex(0x333333);
+    }
+  }
+
+  function resetSelection() {
+    if (selectedBone && originalMaterial) {
+      selectedBone.material = originalMaterial;
+    }
+    selectedBone = null;
+    originalMaterial = null;
+
+    boneMeshes.forEach(bone => {
+      bone.material.opacity = 1;
+      bone.material.transparent = false;
+    });
+
+  }
+
+  function isolateBone(activeBone) {
+    boneMeshes.forEach(bone => {
+      bone.material.transparent = true;
+      bone.material.opacity = bone === activeBone ? 1 : 0.15;
+    });
+  }
+
   renderer.domElement.addEventListener('pointerdown', onPointerDown);
+  renderer.domElement.addEventListener('pointermove', onPointerMove);
+
+  isolateBone(selectedBone);
 
   return {
     cleanup() {
       renderer.domElement.removeEventListener('pointerdown', onPointerDown);
-    }
+    },
+    resetSelection,
+    updateCameraAnimation
   };
 }
