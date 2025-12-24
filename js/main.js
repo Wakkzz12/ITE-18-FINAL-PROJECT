@@ -10,15 +10,23 @@ async function loadJSON(url) {
 }
 
 (async function init() {
+  console.log('Initializing 3D Skeleton Viewer...');
+  
   const bonesMetadata = await loadJSON('data/bones.json').catch((e) => {
     console.warn('Could not load bones.json', e);
     return {};
   });
 
+  console.log('Loading 3D model...');
   const { scene, camera, renderer, controls, root, boneMeshes } = await createScene({
     canvasContainerId: 'viewer',
-    objPath: '../assets/human-skeleton/skeleton.glb'
+    objPath: 'assets/human-skeleton/skeleton.glb'
+  }).catch((error) => {
+    console.error('Error loading scene:', error);
+    throw error;
   });
+  
+  console.log('Model loaded successfully. Bones found:', boneMeshes.length);
 
   const ui = createUI({ bonesMetadata });
 
@@ -49,10 +57,9 @@ async function loadJSON(url) {
 
   // render loop
   function render() {
-  requestAnimationFrame(render);
-  controls.update();
-  interactor.updateCameraAnimation(); // 👈 ADD THIS
-  renderer.render(scene, camera);
-}
+    requestAnimationFrame(render);
+    controls.update();
+    renderer.render(scene, camera);
+  }
   render();
 })();

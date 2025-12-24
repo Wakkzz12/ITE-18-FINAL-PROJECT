@@ -192,6 +192,12 @@ export function createInteractor({
   renderer.domElement.addEventListener('pointerdown', onPointerDown);
 
   return {
+    resetSelection() {
+      restoreBone();
+      selectedBone = null;
+      resetCamera();
+      rotateSkeletonTo(0);
+    },
     cleanup() {
       renderer.domElement.removeEventListener('pointerdown', onPointerDown);
     }
