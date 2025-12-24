@@ -23,7 +23,7 @@ async function loadJSON(url) {
   const ui = createUI({ bonesMetadata });
 
   const interactor = createInteractor({
-    scene, camera, renderer, controls, boneMeshes, bonesMetadata,
+    scene, camera, renderer, controls, root, boneMeshes, bonesMetadata,
     onSelect: (meshName, meta) => {
       ui.showBone(meshName, meta || {
         name: meshName,

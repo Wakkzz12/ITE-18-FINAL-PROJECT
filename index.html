@@ -19,16 +19,35 @@
     <div id="viewer"></div>
 
     <aside id="info-panel" aria-hidden="true">
-      <button id="close-info">×</button>
-      <h2 id="bone-title">Select a bone</h2>
-      <p id="bone-desc"></p>
-      <h3>Function</h3>
-      <p id="bone-func"></p>
+      <button id="close-info" title="Close panel">×</button>
+      <div id="bone-header">
+        <h2 id="bone-title">Select a bone</h2>
+        <span id="bone-indicator" class="indicator"></span>
+      </div>
+      
+      <div id="bone-definition-section">
+        <h3>Definition</h3>
+        <p id="bone-desc"></p>
+      </div>
+      
+      <div id="bone-function-section">
+        <h3>Function</h3>
+        <p id="bone-func"></p>
+      </div>
     </aside>
 
     <div id="hud">
-      <button id="reset-btn">Reset View</button>
-      <div id="help">Tap/click a bone to zoom & show info</div>
+      <div id="controls-group">
+        <button id="reset-btn" title="Reset camera to initial view">↺ Reset View</button>
+        <div id="help-text">
+          <div class="help-title">How to use:</div>
+          <ul class="help-list">
+            <li>Click a bone to zoom in</li>
+            <li>Double-click background to reset</li>
+            <li>Drag to rotate view</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 

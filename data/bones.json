@@ -84,7 +84,7 @@
     "definition": "Long bones in the foot located between the ankle and toes.",
     "function": "Provide structure to the foot; support body weight during standing and walking."
   },
-  "Skeletal System": {
+  "Skeletal_System": {
     "displayName": "Skeletal System",
     "definition": "The skeletal system is the framework of bones and cartilage that supports and protects the body.",
     "function": "Provides structure, protects organs, anchors muscles, and stores calcium."
@@ -93,6 +93,11 @@
     "displayName": "Tarsals (Ankle bones)",
     "definition": "Group of seven bones that make up the ankle.",
     "function": "Support weight of the body; enable foot movement and stability."
+  },
+  "Pubis": {
+    "displayName": "Pubis (Pubic bone)",
+    "definition": "One of the three bones that make up the pelvis, located at the front.",
+    "function": "Supports weight when sitting; provides attachment for muscles of the lower abdomen and thigh."
   }
 
 

@@ -50,26 +50,28 @@ export async function createScene({ canvasContainerId, objPath }) {
     const boneMeshes = [];
 
     // Mapping of mesh names/indices to bone names from bones.json
+    // Note: Order matters - more specific patterns should come first
     const meshNameMap = {
         'Skull': ['Skull', 'skull', 'head', 'cranium'],
-        'Femur': ['Femur', 'femur', 'thigh', 'thigh_bone'],
-        'Humerus': ['Humerus', 'humerus', 'upper_arm', 'arm'],
+        'Femur': ['Femur', 'femur', 'thigh', 'thigh_bone', 'femur_l', 'femur_r', 'femur_left', 'femur_right'],
+        'Humerus': ['Humerus', 'humerus', 'upper_arm', 'arm', 'humerus_l', 'humerus_r', 'humerus_left', 'humerus_right'],
         'Ribcage': ['Ribcage', 'ribcage', 'ribs', 'rib_cage'],
         'Vertebrae': ['Vertebrae', 'vertebrae', 'spine', 'spinal', 'vertebra', 'backbone'],
         'Sternum': ['Sternum', 'sternum', 'breastbone'],
         'Hipbone': ['Hipbone', 'hipbone', 'pelvis', 'hip_bone'],
-        'Metacarpals': ['Metacarpals', 'metacarpals', 'hand_bones'],
-        'Phalanges': ['Phalanges', 'phalanges', 'fingers', 'toes'],
-        'Tibia': ['Tibia', 'tibia', 'shin_bone', 'shin'],
-        'Radius': ['Radius', 'radius', 'thumb_side', 'radius_bone'],
-        'Ulna': ['Ulna', 'ulna', 'pinky_side', 'ulna_bone'],
-        'Scapula': ['Scapula', 'scapula', 'shoulder_blade'],
-        'Clavicle': ['Clavicle', 'clavicle', 'collar_bone'],
-        "Patella": ['Patella', 'patella', 'kneecap'],
-        "Carpals": ['Carpals', 'carpals', 'wrist_bones'],
-        "Metatarsals": ['Metatarsals', 'metatarsals', 'foot_bones'],
-        "Skeletal System": ['Skeleton', 'skeleton', 'full_body'],
-        "Tarsals": ['Tarsals', 'tarsals', 'ankle_bones'],
+        'Metacarpals': ['Metacarpals', 'metacarpals', 'hand_bones', 'metacarpal_l', 'metacarpal_r', 'metacarpal_left', 'metacarpal_right'],
+        'Phalanges': ['Phalanges', 'phalanges', 'fingers', 'toes', 'phalanges_l', 'phalanges_r', 'phalanges_left', 'phalanges_right'],
+        'Tibia': ['Tibia', 'tibia', 'shin_bone', 'shin', 'tibia_l', 'tibia_r', 'tibia_left', 'tibia_right'],
+        'Radius': ['Radius', 'radius', 'thumb_side', 'radius_bone', 'radius_l', 'radius_r', 'radius_left', 'radius_right'],
+        'Ulna': ['Ulna', 'ulna', 'pinky_side', 'ulna_bone', 'ulna_l', 'ulna_r', 'ulna_left', 'ulna_right'],
+        'Scapula': ['Scapula', 'scapula', 'shoulder_blade', 'scapula_l', 'scapula_r', 'scapula_left', 'scapula_right'],
+        'Clavicle': ['Clavicle', 'clavicle', 'collar_bone', 'clavicle_l', 'clavicle_r', 'clavicle_left', 'clavicle_right'],
+        "Patella": ['Patella', 'patella', 'kneecap', 'patella_l', 'patella_r', 'patella_left', 'patella_right'],
+        "Carpals": ['Carpals', 'carpals', 'wrist_bones', 'carpal_l', 'carpal_r', 'carpal_left', 'carpal_right'],
+        "Metatarsals": ['Metatarsals', 'metatarsals', 'foot_bones', 'metatarsal_l', 'metatarsal_r', 'metatarsal_left', 'metatarsal_right'],
+        "Skeletal_System": ['Skeleton', 'skeleton', 'full_body'],
+        "Tarsals": ['Tarsals', 'tarsals', 'ankle_bones', 'tarsal_l', 'tarsal_r', 'tarsal_left', 'tarsal_right'],
+        "Pubis": ['Pubis', 'pubis', 'pubic_bone']
     };
 
     // Function to match mesh name to bone name
@@ -79,9 +81,33 @@ export async function createScene({ canvasContainerId, objPath }) {
         }
 
         const lowerName = meshName.toLowerCase();
+        
+        // Special handling for bones that can be easily confused
+        // Check for Ulna first (pinky side) - should match before general forearm patterns
+        if (lowerName.includes('ulna') || (lowerName.includes('pinky') && !lowerName.includes('radius'))) {
+            return 'Ulna';
+        }
+        // Check for Radius (thumb side) - should match before general forearm patterns
+        if (lowerName.includes('radius') || (lowerName.includes('thumb') && !lowerName.includes('ulna'))) {
+            return 'Radius';
+        }
+
+        // Check for other specific patterns
         for (const [boneName, aliases] of Object.entries(meshNameMap)) {
-            if (aliases.some(alias => lowerName.includes(alias.toLowerCase()))) {
-                return boneName;
+            // Skip if we already handled it above
+            if (boneName === 'Ulna' || boneName === 'Radius') {
+                continue;
+            }
+            
+            for (const alias of aliases) {
+                const aliasLower = alias.toLowerCase();
+                // Exact match preferred, then substring match
+                if (lowerName === aliasLower) {
+                    return boneName;
+                }
+                if (lowerName.includes(aliasLower)) {
+                    return boneName;
+                }
             }
         }
         return null;
@@ -105,6 +131,7 @@ export async function createScene({ canvasContainerId, objPath }) {
                         console.log('Renamed to:', matchedBone);
                     } else {
                         child.name = child.name || 'Bone_' + child.id;
+                        console.log('Kept as:', child.name);
                     }
 
                     // DO NOT replace material – preserve GLTF data
