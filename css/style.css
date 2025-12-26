@@ -158,7 +158,8 @@ html, body, #app {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  z-index: 100;
+  z-index: 150;
+  pointer-events: auto;
 }
 
 #controls-group {
@@ -169,7 +170,8 @@ html, body, #app {
 
 #reset-btn {
   padding: 10px 16px;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(96, 165, 250, 0.1) 100%);
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(96, 165, 250, 0.25);
   border: 1.5px solid rgba(96, 165, 250, 0.3);
   color: #60a5fa;
   font-size: 14px;
@@ -182,8 +184,8 @@ html, body, #app {
 }
 
 #reset-btn:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(96, 165, 250, 0.2) 100%);
-  border-color: rgba(96, 165, 250, 0.5);
+  background-color: #00295b;
+  border-color: rgba(38, 122, 224, 0.4);
   box-shadow: 0 6px 16px rgba(96, 165, 250, 0.2);
   transform: translateY(-2px);
 }
@@ -195,13 +197,20 @@ html, body, #app {
 
 /* Help Text */
 #help-text {
-  background: rgba(96, 165, 250, 0.05);
-  border: 1px solid rgba(96, 165, 250, 0.15);
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(96, 165, 250, 0.25);
   padding: 12px 14px;
   border-radius: 10px;
   font-size: 13px;
   line-height: 1.5;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
+
+#help-text:hover {
+  border-color: rgba(96, 165, 250, 0.4);
+}
+
+
 
 .help-title {
   font-weight: 600;
