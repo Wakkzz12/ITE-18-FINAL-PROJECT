@@ -25,10 +25,10 @@ export function createUI({ bonesMetadata }) {
     panel.setAttribute('aria-hidden', 'false');
     
     // Pulse indicator on bone selection
-    /* indicator.style.animation = 'none';
+    indicator.style.animation = 'none';
     setTimeout(() => {
       indicator.style.animation = 'pulse 2s ease-in-out infinite';
-    }, 10); */
+    }, 10);
   }
 
   function hide() {

@@ -79,14 +79,14 @@ html, body, #app {
   flex: 1;
 }
 
-/* #bone-indicator {
+#bone-indicator {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background: #ff8800;
   box-shadow: 0 0 8px rgba(255, 136, 0, 0.5);
   animation: pulse 2s ease-in-out infinite;
-} */
+}
 
 @keyframes pulse {
   0%, 100% {
