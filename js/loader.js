@@ -1,41 +1,67 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 
 export async function createScene({ canvasContainerId, objPath }) {
     const container = document.getElementById(canvasContainerId);
 
     // Setup Scene
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color('#111');
+    const rgbeLoader = new RGBELoader();
+    rgbeLoader.load('assets/skybox/hospital_room_2_4k.hdr', (texture) => {
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        scene.environment = texture; 
+        
+        const sphereGeometry = new THREE.SphereGeometry(150, 60, 40);
+        sphereGeometry.scale(-1.25, 1, 1.25); // Invert the geometry so the texture is visible on the INSIDE
 
+        const sphereMaterial = new THREE.MeshBasicMaterial({ // BasicMaterial so the room lighting doesn't affect the room picture itself
+            map: texture,
+        });
+
+        const backgroundSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        backgroundSphere.position.y = 70
+        scene.add(backgroundSphere);
+    });
+
+    // Setup Camera 
     const camera = new THREE.PerspectiveCamera(
         45,
         container.clientWidth / container.clientHeight,
         0.1,
-        1000
+        2000
     );
-    camera.position.set(0, 120, 350);
 
+    camera.position.set(0, 120, 150);
+
+    // Setup Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.outputColorSpace = THREE.SRGBColorSpace; // Optional: often looks better for GLTF
+
+    // renderer.outputColorSpace = THREE.SRGBColorSpace; // Old colorspace settings
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.0;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
     container.appendChild(renderer.domElement);
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // Old value: 0.6
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    dirLight.position.set(50, 100, 100);
-    scene.add(dirLight);
+    // const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    // dirLight.position.set(50, 100, 100);
+    // scene.add(dirLight);
 
     // Controls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
+    controls.enablePan = false;
     controls.dampingFactor = 0.05;
     controls.target.set(0, 80, 0);
+    controls.maxDistance = 200;
     controls.update();
 
     // Resize Handler
@@ -169,7 +195,7 @@ export async function createScene({ canvasContainerId, objPath }) {
                 scene.add(model);
 
                 // Update camera target to look at the center (0, 0, 0)
-                controls.target.set(0, 0, 0);
+                controls.target.set(0, 25, 0);
                 controls.update();
 
                 // Log the dimensions to debug
