@@ -9,9 +9,13 @@ This project is an interactive 3D application that displays human bone models in
 
 ### DEVELOPMENT STACK
 --Programming Language: JavaScript
+
 --3D Library: Three.js
+
 --3D Model Format: GLTF / GLB
+
 --Tools & Environment:
+
 ```
 --Web Browser (Chrome, Firefox, Edge)
 --VS Code for code editor
