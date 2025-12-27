@@ -50,3 +50,12 @@ Start development server:
 ```
 npm run dev
 ```
+
+### TEAM ROLES
+Angelo Mari Montero - Project Leader / Backend & Frontend
+
+Cassandra Mae Mataya - Member / Frontend Design
+
+Joaquin Emmanuel Cabelin - Member / Backend & Material Design
+
+
