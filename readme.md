@@ -34,6 +34,13 @@ This project is an interactive 3D application that displays human bone models in
 
 ### Setup
 
+Clone or Download the Repo:
+```
+https://github.com/Wakkzz12/ITE-18-FINAL-PROJECT.git
+
+or download the ZIP file and extract it
+```
+
 Install dependencies:
 ```
 npm install
